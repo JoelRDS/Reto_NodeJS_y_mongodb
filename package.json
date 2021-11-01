@@ -1,0 +1,11 @@
+{
+  "name": "reto_2",
+  "version": "1.0.0",
+  "description": "Segundo reto de la semana dos, de nodejs",
+  "main": "servidor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joel Rodriguez MisionTIC",
+  "license": "ISC"
+}
