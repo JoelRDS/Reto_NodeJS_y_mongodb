@@ -22,6 +22,17 @@ router.get('/',(req,res) => {
     res.send("El inicio de mi API Rest")
 });
 
+//el metodo get es para poder consultar los elementos que tenemos almacenados.
+router.get('/tarea', (req, res) => {
+    TareaSchema.find(function(err,datos){
+        if(err){
+            console.log("Error leyendo las tareas");
+
+        }else{
+            res.send(datos);
+        }
+    })
+} )
 //metodo post = es crear un registro en la base de datos.
 router.post('/tarea', (req, res) => {
     let nuevaTarea = new TareaSchema({
