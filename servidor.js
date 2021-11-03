@@ -11,7 +11,7 @@ const TareaSchema = require('./Modelos/Tarea.js');
 const app = express();
 //rutas
 const router = express.Router();
-app.use(express.urlendoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //Conexión a base de datos
@@ -22,9 +22,33 @@ router.get('/',(req,res) => {
     res.send("El inicio de mi API Rest")
 });
 
+//metodo post = es crear un registro en la base de datos.
+router.post('/tarea', (req, res) => {
+    let nuevaTarea = new TareaSchema({
+    TipoDocumento: req.body.tipodoc,
+    DocumentoIdentificación: req.body.id,
+    Nombres: req.body.nombre,
+    Apellidos : req.body.apellido,
+    Dirección: req.body.direccion,
+    CorreoElectrónico: req.body.correo,
+    TeléfonoFijo: req.body.telefonoF,
+    TeléfonoCelular: req.body.telefonoC,
+    EnlaceSitioWeb: req.body.enlace,
+    DescripciónDelPerfil: req.body.descripcion
+    });
 
+    // damos la instruccion a la nueva tarea de guardar
+nuevaTarea.save(function(err, datos){
+    if(err){
+        //si existe algun eror se mostrara el error
+        console.log(err);
+    }
+    res.send("Usuario Almacenado")
+})
 
+})
 
+app.use(router);
 app.listen(3000, ()=>{
     console.log("el servidor se esta ejecutando en el puerto 3000")
 
