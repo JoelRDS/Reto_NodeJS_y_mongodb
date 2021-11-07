@@ -18,11 +18,13 @@ app.use(express.json());
 mongoose.connect("mongodb+srv://prog_web:ProgWebMintic2022@clusterprogweb.okrdk.mongodb.net/RetO2bd?retryWrites=true&w=majority");
 
 //Operaciones CRUD
+
+//el metodo get es para poder consultar los elementos que tenemos almacenados.
 router.get('/',(req,res) => {
     res.send("El inicio de mi API Rest")
 });
 
-//el metodo get es para poder consultar los elementos que tenemos almacenados.
+
 router.get('/tarea', (req, res) => {
     TareaSchema.find(function(err,datos){
         if(err){
@@ -47,8 +49,7 @@ router.post('/tarea', (req, res) => {
     EnlaceSitioWeb: req.body.enlace,
     DescripciónDelPerfil: req.body.descripcion
     });
-
-    // damos la instruccion a la nueva tarea de guardar
+// damos la instruccion a la nueva tarea de guardar
 nuevaTarea.save(function(err, datos){
     if(err){
         //si existe algun eror se mostrara el error
@@ -57,6 +58,34 @@ nuevaTarea.save(function(err, datos){
     res.send("Usuario Almacenado")
 })
 
+});
+
+   //metodo update
+
+   router.post('/tarea_update', function (req, res) {
+    let body = req.body;
+    TareaSchema.updateOne({ _id: body._id },
+        {
+            $set: req.body
+        },
+        function (err, datos) {
+            if (err) {
+                console.log(err);
+            }
+            res.send("Tarea actualizada correctamente.")
+        })
+});
+
+//metodo delete
+
+router.delete('/tarea_delete', function(req, res) {
+    let body = req.body;
+    TareaSchema.deleteOne({_id: body._id}, function(err, datos){
+        if(err){
+            console.log(err);
+        }
+        res.send("Tarea Eliminada correctamente")
+    })
 })
 
 app.use(router);
